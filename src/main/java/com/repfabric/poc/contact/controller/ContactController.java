@@ -65,7 +65,10 @@ public class ContactController {
     @PostMapping("/contacts")
     @ApiResponses(value = {
         @ApiResponse(content = {
-            @Content(mediaType = "application/json")})})
+            @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = ContactDTO.class))},
+                description = "OK",
+                responseCode = "200")})
     public ResponseEntity<ContactDTO> createContact(@RequestBody ContactDTO contactDTO) throws URISyntaxException {
         log.debug("REST request to save Contact : {}", contactDTO);
         if (contactDTO.getId() != null) {
@@ -93,7 +96,10 @@ public class ContactController {
     @PutMapping("/contacts/{id}")
     @ApiResponses(value = {
         @ApiResponse(content = {
-            @Content(mediaType = "application/json")})})
+            @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = ContactDTO.class))},
+                description = "OK",
+                responseCode = "200")})
     public ResponseEntity<ContactDTO> updateContact(
             @PathVariable(value = "id", required = false) final Long id,
             @RequestBody ContactDTO contactDTO
@@ -134,7 +140,10 @@ public class ContactController {
     @PatchMapping(value = "/contacts/{id}", consumes = {"application/json", "application/merge-patch+json"})
     @ApiResponses(value = {
         @ApiResponse(content = {
-            @Content(mediaType = "application/json")})})
+            @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = ContactDTO.class))},
+                description = "OK",
+                responseCode = "200")})
     public ResponseEntity<ContactDTO> partialUpdateContact(
             @PathVariable(value = "id", required = false) final Long id,
             @RequestBody ContactDTO contactDTO
@@ -168,7 +177,10 @@ public class ContactController {
     @GetMapping("/contacts")
     @ApiResponses(value = {
         @ApiResponse(content = {
-            @Content(mediaType = "application/json")})})
+            @Content(mediaType = "application/json", 
+                    array = @ArraySchema(schema = @Schema(implementation = ContactDTO.class)))},
+                description = "OK",
+                responseCode = "200")})
     public List<ContactDTO> getAllContacts() {
         log.debug("REST request to get all Contacts");
         return contactService.findAll();
@@ -184,7 +196,10 @@ public class ContactController {
     @GetMapping("/contacts/{id}")
     @ApiResponses(value = {
         @ApiResponse(content = {
-            @Content(mediaType = "application/json")})})
+            @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = ContactDTO.class))},
+                description = "OK",
+                responseCode = "200")})
     public ResponseEntity<ContactDTO> getContact(@PathVariable Long id) {
         log.debug("REST request to get Contact : {}", id);
         Optional<ContactDTO> contactDTO = contactService.findOne(id);
@@ -200,7 +215,10 @@ public class ContactController {
     @DeleteMapping("/contacts/{id}")
     @ApiResponses(value = {
         @ApiResponse(content = {
-            @Content(mediaType = "application/json")})})
+            @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = String.class))},
+                description = "OK",
+                responseCode = "200")})
     public ResponseEntity<String> deleteContact(@PathVariable Long id) {
         log.debug("REST request to delete Contact : {}", id);
         contactService.delete(id);
