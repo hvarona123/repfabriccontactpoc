@@ -6,6 +6,11 @@ import com.repfabric.poc.contact.service.dto.ContactDTO;
 import com.repfabric.poc.contact.controller.errors.BadRequestAlertException;
 import com.repfabric.poc.contact.utils.HeaderUtil;
 import com.repfabric.poc.contact.utils.ResponseUtil;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -13,7 +18,6 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -58,6 +63,9 @@ public class ContactController {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/contacts")
+    @ApiResponses(value = {
+        @ApiResponse(content = {
+            @Content(mediaType = "application/json")})})
     public ResponseEntity<ContactDTO> createContact(@RequestBody ContactDTO contactDTO) throws URISyntaxException {
         log.debug("REST request to save Contact : {}", contactDTO);
         if (contactDTO.getId() != null) {
@@ -83,6 +91,9 @@ public class ContactController {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/contacts/{id}")
+    @ApiResponses(value = {
+        @ApiResponse(content = {
+            @Content(mediaType = "application/json")})})
     public ResponseEntity<ContactDTO> updateContact(
             @PathVariable(value = "id", required = false) final Long id,
             @RequestBody ContactDTO contactDTO
@@ -121,6 +132,9 @@ public class ContactController {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/contacts/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    @ApiResponses(value = {
+        @ApiResponse(content = {
+            @Content(mediaType = "application/json")})})
     public ResponseEntity<ContactDTO> partialUpdateContact(
             @PathVariable(value = "id", required = false) final Long id,
             @RequestBody ContactDTO contactDTO
@@ -152,6 +166,9 @@ public class ContactController {
      * list of contacts in body.
      */
     @GetMapping("/contacts")
+    @ApiResponses(value = {
+        @ApiResponse(content = {
+            @Content(mediaType = "application/json")})})
     public List<ContactDTO> getAllContacts() {
         log.debug("REST request to get all Contacts");
         return contactService.findAll();
@@ -165,6 +182,9 @@ public class ContactController {
      * body the contactDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/contacts/{id}")
+    @ApiResponses(value = {
+        @ApiResponse(content = {
+            @Content(mediaType = "application/json")})})
     public ResponseEntity<ContactDTO> getContact(@PathVariable Long id) {
         log.debug("REST request to get Contact : {}", id);
         Optional<ContactDTO> contactDTO = contactService.findOne(id);
@@ -178,6 +198,9 @@ public class ContactController {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/contacts/{id}")
+    @ApiResponses(value = {
+        @ApiResponse(content = {
+            @Content(mediaType = "application/json")})})
     public ResponseEntity<String> deleteContact(@PathVariable Long id) {
         log.debug("REST request to delete Contact : {}", id);
         contactService.delete(id);
