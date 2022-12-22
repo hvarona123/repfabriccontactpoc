@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contact-deployment
+  labels:
+    app: contact
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contact
+  template:
+    metadata:
+      labels:
+        app: contact
+    spec:
+      containers:
+      - name: contact
+        image: 679818959710.dkr.ecr.us-east-1.amazonaws.com/contact-poc:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: spring.datasource.username
+          valueFrom:
+            secretKeyRef:
+              name: contact-secret
+              key: db-user
+        - name: spring.datasource.password
+          valueFrom:
+            secretKeyRef:
+              name: contact-secret
+              key: db-password
+        - name: spring.datasource.url
+          valueFrom:
+            secretKeyRef:
+              name: contact-secret
+              key: db-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact-service
+spec:
+  type: NodePort
+  selector:
+    app: contact
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30201
