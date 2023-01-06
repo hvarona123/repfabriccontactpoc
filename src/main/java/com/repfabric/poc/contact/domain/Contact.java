@@ -67,8 +67,8 @@ public class Contact implements Serializable {
     @Column(name = "referred_by")
     private String referredBy;
 
-//    @Column(name = "context")
-//    private String context;
+    @Column(name = "context")
+    private String context;
 
     @Column(name = "is_primary")
     private Boolean isPrimary;
@@ -305,7 +305,7 @@ public class Contact implements Serializable {
         this.referredBy = referredBy;
     }
 
-/*    public String getContext() {
+    public String getContext() {
         return this.context;
     }
 
@@ -317,7 +317,7 @@ public class Contact implements Serializable {
     public void setContext(String context) {
         this.context = context;
     }
-*/
+
     public Boolean getIsPrimary() {
         return this.isPrimary;
     }
