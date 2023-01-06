@@ -206,7 +206,7 @@ public class DataGenerator implements ApplicationListener<ApplicationReadyEvent>
         if (faker.bool().bool()) {
             contact.setAssistantName(faker.name().fullName());
         }
-        contact.setContext("");
+//        contact.setContext("");
         contact.setCreateDate(LocalDate.ofEpochDay(faker.date().past(5, TimeUnit.DAYS).getTime() / 86400000L));
         contact.setCreaterUser(createUser);
         contact.setDept(faker.commerce().department());
