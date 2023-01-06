@@ -55,8 +55,8 @@ public class Contact implements Serializable {
     @Column(name = "dept")
     private String dept;
 
-    //@Column(name = "location")
-    //private String location;
+    @Column(name = "location")
+    private String location;
 
     @Column(name = "manager_name")
     private String managerName;
@@ -253,7 +253,7 @@ public class Contact implements Serializable {
         this.dept = dept;
     }
 
-    /*public String getLocation() {
+    public String getLocation() {
         return this.location;
     }
 
@@ -264,7 +264,7 @@ public class Contact implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
-    }*/
+    }
 
     public String getManagerName() {
         return this.managerName;
