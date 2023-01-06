@@ -222,7 +222,7 @@ public class DataGenerator implements ApplicationListener<ApplicationReadyEvent>
         contact.setIsPrimary(Boolean.TRUE);
         contact.setIsSync(Boolean.FALSE);
         contact.setJobTitle(faker.job().title());
-        contact.setLocation(faker.address().fullAddress());
+//        contact.setLocation(faker.address().fullAddress());
         if (faker.bool().bool()) {
             contact.setManagerName(faker.name().fullName());
         }
