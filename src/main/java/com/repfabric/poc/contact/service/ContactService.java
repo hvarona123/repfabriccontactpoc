@@ -1,5 +1,6 @@
 package com.repfabric.poc.contact.service;
 
+import com.repfabric.poc.contact.controller.errors.BadRequestAlertException;
 import com.repfabric.poc.contact.domain.Contact;
 import com.repfabric.poc.contact.repository.ContactRepository;
 import com.repfabric.poc.contact.service.dto.ContactDTO;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ContactService {
 
     private final Logger log = LoggerFactory.getLogger(ContactService.class);
+    
+    private static final String ENTITY_NAME = "Contact";
 
     private final ContactRepository contactRepository;
 
@@ -40,6 +43,12 @@ public class ContactService {
     public ContactDTO save(ContactDTO contactDTO) {
         log.debug("Request to save Contact : {}", contactDTO);
         Contact contact = contactMapper.toEntity(contactDTO);
+        if(contact.getFirstName() == null || contact.getFirstName().isEmpty()){
+            throw new BadRequestAlertException("Contact first name can't be null.", ENTITY_NAME, "nullparametererror");
+        }
+        if(contact.getFirstName().length()> 255){
+            throw new BadRequestAlertException("Contact First Name maximum size is 255 characters.", ENTITY_NAME, "maxparametererror");
+        }
         contact = contactRepository.save(contact);
         return contactMapper.toDto(contact);
     }
